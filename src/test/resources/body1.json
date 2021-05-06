@@ -1,0 +1,7 @@
+{
+  "operationName": "appraisal",
+  "query": "query appraisal($appraisalId: String!) {\n  appraisal(id: $appraisalId) {\n    structure\n  }\n}\n",
+  "variables": {
+    "appraisalId": "6092a6851e311c0029923e7b"
+  }
+}
