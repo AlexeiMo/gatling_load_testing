@@ -16,7 +16,12 @@ class BoweryLoadSimulation extends Simulation{
   val formsCount = 6
   val formValue1 = "job-info"
   val formValue2 = "subject"
-  val id = "6092a6851e311c0029923e7b"
+  val id = "6093030ee5ad6600281be0f8"
+
+  val endpoint = "/graphql"
+  val filePath1 = "src\\test\\resources\\body1.json"
+  val filePath2 = "src\\test\\resources\\body1.json"
+  val filePath3 = "src\\test\\resources\\body3.json"
 
   val theHttpProtocolBuilder: HttpProtocolBuilder = http
     .baseURL("https://api.qa.workbook.bowery.link")
@@ -25,8 +30,8 @@ class BoweryLoadSimulation extends Simulation{
   val theScenarioBuilder: ScenarioBuilder = scenario("Load Scenario")
     .exec(
       http("POST to GraphQL endpoint 1")
-        .post("/graphql")
-        .body(RawFileBody("src\\test\\resources\\body1.json")).asJSON
+        .post(endpoint)
+        .body(RawFileBody(filePath1)).asJSON
         .check(status.is(200))
         .check(jsonPath("$..forms[*]").count.is(formsCount))
         .check(jsonPath("$..forms[0].key").is(formValue1))
@@ -35,8 +40,16 @@ class BoweryLoadSimulation extends Simulation{
     .pace(1 seconds)
     .exec(
       http("POST to GraphQL endpoint 2")
-        .post("/graphql")
-        .body(RawFileBody("src\\test\\resources\\body2.json")).asJSON
+        .post(endpoint)
+        .body(RawFileBody(filePath2)).asJSON
+        .check(status.is(200))
+        .check(jsonPath("$..notes[*]").count.is(0))
+    )
+    .pace(1 seconds)
+    .exec(
+      http("POST to GraphQL endpoint 3")
+        .post(endpoint)
+        .body(RawFileBody(filePath3)).asJSON
         .check(status.is(200))
         .check(jsonPath("$..id").is(id))
     )

@@ -1,9 +1,8 @@
 {
   "operationName": "appraisal",
-  "variables":
-  {
-    "appraisalId": "6092a6851e311c0029923e7b",
-    "noteId": "operating-expenses"
+  "variables":{
+    "appraisalId": "6093030ee5ad6600281be0f8",
+    "noteId": "job-info"
   },
   "query": "query appraisal($appraisalId: String!, $noteId: String!) {\n  appraisal(id: $appraisalId) {\n    id\n    notes(id: $noteId) {\n      id\n      content\n    }\n  }\n}\n"
 }
